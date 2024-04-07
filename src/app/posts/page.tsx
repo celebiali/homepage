@@ -15,7 +15,6 @@ export const metadata = {
 
 export default async function PostsPage() {
   let allPosts = getPosts();
-
   let publishedPosts = allPosts.filter((post) => !post.metadata.isDraft);
 
   const views = (

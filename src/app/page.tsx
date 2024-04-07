@@ -38,6 +38,7 @@ export default async function Home() {
         </div>
 
         <div className="flex flex-col space-y-6">
+          {/* Posts */}
           <div className="flex flex-col space-y-2">
             <span className="font-semibold md:px-6">Recent Posts</span>
             <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">

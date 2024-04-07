@@ -17,7 +17,6 @@ export default function Posts({
 }) {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag');
-
   const filteredPosts = tag
     ? allPosts.filter((post: any) => post.metadata.tag.includes(tag))
     : allPosts;
