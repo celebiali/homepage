@@ -4,6 +4,7 @@ import { LinkedInIcon } from '@/components/icons/linkedin';
 
 export const CONFIG = {
   name: 'Ali Rıza ÇELEBİ',
+  title: 'Frontend Developer',
   headshot: profileImage,
   description: `Hi, I'm Ali Rıza ÇELEBİ. I work as a Frontend Developer. I'll be sharing blog posts and short notes here.`,
   socials: [

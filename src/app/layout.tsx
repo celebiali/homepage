@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.hosnaqasmei.com/'),
   title: { default: 'Ali Rıza ÇELEBİ', template: '%s | Ali Rıza ÇELEBİ' },
-  description: 'Developer & YouTuber',
+  description: 'Developer',
   openGraph: {
     title: 'Ali Rıza ÇELEBİ',
     description: 'Developer',
