@@ -28,8 +28,8 @@ export async function generateMetadata({
 
   let { metadata, slug, content } = post;
   let ogImage = metadata.image
-    ? `https://www.hosnaqasmei.com${metadata.image}`
-    : `https://www.hosnaqasmei.com/og?title=${metadata.title}`;
+    ? `https://www.alicelebi.com${metadata.image}`
+    : `https://www.alicelebi.com/og?title=${metadata.title}`;
 
   return {
     title: metadata.title,
@@ -38,7 +38,7 @@ export async function generateMetadata({
       title: metadata.title,
       description: metadata.summary,
       type: 'article',
-      url: `https://www.hosnaqasmei.com/posts/${post.slug}`,
+      url: `https://www.alicelebi.com/posts/${post.slug}`,
       images: [
         {
           url: ogImage,

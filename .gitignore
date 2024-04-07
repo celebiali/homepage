@@ -38,3 +38,6 @@ next-env.d.ts
 
 cronjob
 
+
+# Local Netlify folder
+.netlify

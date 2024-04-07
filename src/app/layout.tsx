@@ -11,13 +11,13 @@ import Header from './header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.hosnaqasmei.com/'),
+  metadataBase: new URL('https://www.alicelebi.com/'),
   title: { default: 'Ali Rıza ÇELEBİ', template: '%s | Ali Rıza ÇELEBİ' },
   description: 'Developer',
   openGraph: {
     title: 'Ali Rıza ÇELEBİ',
     description: 'Developer',
-    url: 'https://www.hosnaqasmei.com/',
+    url: 'https://www.alicelebi.com/',
     siteName: 'Ali Rıza ÇELEBİ',
     locale: 'en_US',
     type: 'website',

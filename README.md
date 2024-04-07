@@ -13,6 +13,7 @@ cd portfolio
 bun install
 bun dev
 ```
+[![Netlify Status](https://api.netlify.com/api/v1/badges/85fc7964-e799-41d7-98c4-990cda908cb1/deploy-status)](https://app.netlify.com/sites/portfolioalicelebi/deploys)
 
 Create a `.env` file similar to [`.env.example`](https://github.com/hqasmei/portfolio/blob/main/.env.example).
 
