@@ -47,7 +47,7 @@ export default function RootLayout({
         />
         <script
           src="https://beamanalytics.b-cdn.net/beam.min.js"
-          data-token="a07e2826-5910-4684-9e69-0ec4388a0509"
+          data-token="66272a61-a1a3-4eff-b6f4-f2c8080a6931"
           async
         ></script>
       </head>
