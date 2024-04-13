@@ -28,7 +28,7 @@ export async function generateMetadata({
   if (!bookmarks) {
     return;
   }
-  let { metadata, slug, content, tag } = bookmarks;
+  let { metadata, slug, content } = bookmarks;
   let ogImage = metadata.image
     ? `https://www.alicelebi.com${metadata.image}`
     : `https://www.alicelebi.com/og?title=${metadata.title}`;

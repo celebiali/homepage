@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!post) {
     return;
   }
-  let { metadata, slug, content, tag } = post;
+  let { metadata, slug, content } = post;
   let ogImage = metadata.image
     ? `https://www.alicelebi.com${metadata.image}`
     : `https://www.alicelebi.com/og?title=${metadata.title}`;

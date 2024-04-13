@@ -8,15 +8,13 @@ import { useSearchParams } from 'next/navigation';
 import MaxWidthWrapper from '@/components/max-width-wrapper';
 import { calculateReadingTime, reformatDate } from '@/lib/utils';
 
-export default function Bookmarks({
-  allBookmarks
-}: {
-  allBookmarks: any;
-}) {
+export default function Bookmarks({ allBookmarks }: { allBookmarks: any }) {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag');
   const filteredBookmarks = tag
-    ? allBookmarks.filter((post: any) => bookmarks.metadata.tag.includes(tag))
+    ? allBookmarks.filter((post: any) =>
+        allBookmarks.metadata.tag.includes(tag),
+      )
     : allBookmarks;
 
   return (
