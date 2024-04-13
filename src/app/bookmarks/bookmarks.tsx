@@ -8,18 +8,16 @@ import { useSearchParams } from 'next/navigation';
 import MaxWidthWrapper from '@/components/max-width-wrapper';
 import { calculateReadingTime, reformatDate } from '@/lib/utils';
 
-export default function Posts({
-  allPosts,
-  views,
+export default function Bookmarks({
+  allBookmarks
 }: {
-  allPosts: any;
-  views: any;
+  allBookmarks: any;
 }) {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag');
-  const filteredPosts = tag
-    ? allPosts.filter((post: any) => post.metadata.tag.includes(tag))
-    : allPosts;
+  const filteredBookmarks = tag
+    ? allBookmarks.filter((post: any) => bookmarks.metadata.tag.includes(tag))
+    : allBookmarks;
 
   return (
     <div className="grid grid-cols-1 gap-10 pb-10 w-full">
@@ -45,32 +43,11 @@ export default function Posts({
           <span className="text-secondaryDarker">Back</span>
         </Link>
         <span className="text-4xl font-bold md:px-6 mb-6 md:mb-4">
-          All Posts
+          All Bookmarks
         </span>
-        <div className="flex flex-row space-x-4 mb-6 md:mb-4 text-sm  md:px-6 overflow-x-auto line-clamp-1 text-nowrap">
-          <Link
-            href="/posts"
-            className={`${tag === null ? 'text-secondaryDark underline' : 'text-secondaryDarker'} hover:text-secondaryDark duration-200 hover:underline`}
-          >
-            All
-          </Link>
-          <Link
-            href="/posts?tag=javascript"
-            className={`${tag === 'javascript' ? 'text-secondaryDark underline' : 'text-secondaryDarker'} hover:text-secondaryDark duration-200 hover:underline`}
-          >
-            Javascript
-          </Link>
-          <Link
-            href="/posts?tag=css"
-            className={`${tag === 'css' ? 'text-secondaryDark underline' : 'text-secondaryDarker'} hover:text-secondaryDark duration-200 hover:underline `}
-          >
-            Css
-          </Link>
-        </div>
-
         <div>
           <div className="grid grid-cols-1 gap-6 md:gap-1 md:px-2">
-            {filteredPosts
+            {filteredBookmarks
               .sort((a: any, b: any) => {
                 if (
                   new Date(a.metadata.publishedAt) >
@@ -80,33 +57,27 @@ export default function Posts({
                 }
                 return 1;
               })
-              .map((post: any) => {
+              .map((bookmarks: any) => {
                 return (
                   <Link
-                    key={post.slug}
-                    href={`/posts/${post.slug}`}
+                    key={bookmarks.slug}
+                    href={`/bookmarks/${bookmarks.slug}`}
                     className="flex flex-row justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
                   >
                     <div className="flex flex-col space-y-2">
                       <span className="text-secondaryDark">
-                        {post.metadata.title}
+                        {bookmarks.metadata.title}
                       </span>
 
                       <div className="flex flex-row space-x-2 items-center text-secondaryDarker">
-                        <span>{reformatDate(post.metadata.publishedAt)}</span>
-                        <span className="h-1 w-1 bg-secondaryDarker rounded-full" />
                         <span>
-                          <span>
-                            {Intl.NumberFormat('en-US', {
-                              notation: 'compact',
-                            }).format(views[post.slug])}{' '}
-                            {' views'}
-                          </span>
+                          {reformatDate(bookmarks.metadata.publishedAt)}
                         </span>
+
                         <span className="h-1 w-1 bg-secondaryDarker rounded-full" />
                         <span>
                           <span>
-                            {calculateReadingTime(post.content)}
+                            {calculateReadingTime(bookmarks.content)}
                             {' min read'}
                           </span>
                         </span>
