@@ -144,18 +144,17 @@ export default async function Home() {
                     <Link
                       key={bookmarks.slug}
                       href={`${bookmarks.metadata.link}`}
-                      className="flex flex-row justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
+                      className="flex flex-row flex-wrap justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
                     >
-                      <div className="flex items-center justify-center ">
+                      <div className="flex md:flex-row flex-col md:items-center md:justify-center ">
                         <span className="text-secondaryDark">
                           {bookmarks.metadata.title}
                         </span>
-                        <span className="h-1 w-1 bg-secondaryDarker rounded-full mx-3"></span>
-                        <span className="text-secondaryDarker">
+                        <span className="h-1 w-1 bg-secondaryDarker rounded-full mx-3 hidden md:block"></span>
+                        <span className="text-secondaryDarker md:mt-0 mt-2">
                           {reformatDate(bookmarks.metadata.publishedAt)}
                         </span>
                       </div>
-
                       <svg
                         width="12"
                         height="12"
