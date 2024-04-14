@@ -64,11 +64,15 @@ export default function Bookmarks({ allBookmarks }: { allBookmarks: any }) {
         </div>
         <div className="grid grid-cols-1 gap-6 md:gap-1 md:px-2">
           {filteredBookmarks
-            .sort(
-              (a: any, b: any) =>
-                new Date(b.metadata.publishedAt) -
-                new Date(a.metadata.publishedAt),
-            )
+            .sort((a: any, b: any) => {
+              if (
+                new Date(a.metadata.publishedAt) >
+                new Date(b.metadata.publishedAt)
+              ) {
+                return -1;
+              }
+              return 1;
+            })
             .map((bookmark: any) => (
               <Link
                 key={bookmark.slug}

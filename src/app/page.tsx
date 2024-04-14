@@ -41,7 +41,7 @@ export default async function Home() {
         <div className="flex flex-col space-y-4">
           {/* Posts */}
           <div className="flex flex-col space-y-3 ">
-            <span className="font-semibold md:px-6">Recent Posts</span>
+            <span className="font-semibold md:px-6 pb-2">Recent Posts</span>
             <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
               {allPosts
                 .filter((post) => post.metadata.featured === 'true')
@@ -127,7 +127,7 @@ export default async function Home() {
           </div>
           {/* Bookmarks */}
           <div className="flex flex-col space-y-3">
-            <span className="font-semibold md:px-6">Recent Bookmarks</span>
+            <span className="font-semibold md:px-6 pb-2">Recent Bookmarks</span>
             <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
               {allBookmarks
                 .sort((a: any, b: any) => {
