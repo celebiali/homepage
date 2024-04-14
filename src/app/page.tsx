@@ -1,27 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-
-
 import { CONFIG } from '@/config';
-import { getPosts } from '@/lib/posts';
+import { getBookmarks, getPosts } from '@/lib/posts';
 import { calculateReadingTime, reformatDate } from '@/lib/utils';
 import { Redis } from '@upstash/redis';
 
-
-
 import Header from './header';
-
 
 const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export default async function Home() {
   let allPosts = getPosts();
-  let publishedBookmarks = getPosts();
-  let allBookmarks = publishedBookmarks.filter(
-    (bookmarks) => !bookmarks.metadata.isDraft,
-  );
+  let allBookmarks = getBookmarks();
   const views = (
     await redis.mget<number[]>(
       ...allPosts.map((p) => ['pageviews', 'posts', p.slug].join(':')),
@@ -136,10 +128,9 @@ export default async function Home() {
           {/* Bookmarks */}
           <div className="flex flex-col space-y-2">
             <span className="font-semibold md:px-6">Recent Bookmarks</span>
-            {/* <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
+            <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
               {allBookmarks
-                .filter((bookmarks) => bookmarks.metadata.featured === 'true')
-                .sort((a, b) => {
+                .sort((a: any, b: any) => {
                   if (
                     new Date(a.metadata.publishedAt) >
                     new Date(b.metadata.publishedAt)
@@ -148,34 +139,36 @@ export default async function Home() {
                   }
                   return 1;
                 })
-                .slice(0, 3)
-                .map((bookmarks) => (
-                  <Link
-                    key={bookmarks.slug}
-                    href={`/bookmarks/${bookmarks.slug}`}
-                    className="flex flex-row justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
-                  >
-                    <div className="flex flex-col space-y-2">
-                      <span className="text-secondaryDark">
-                        {bookmarks.metadata.title}
-                      </span>
-                    </div>
-                    <svg
-                      width="12"
-                      height="12"
-                      viewBox="0 0 12 12"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-secondaryDarker"
+                .map((bookmarks: any) => {
+                  return (
+                    <Link
+                      key={bookmarks.slug}
+                      href={`${bookmarks.metadata.link}`}
+                      className="flex flex-row justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
                     >
-                      <path
-                        d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+                      <div className="flex flex-col space-y-2">
+                        <span className="text-secondaryDark">
+                          {bookmarks.metadata.title}
+                        </span>
+                      </div>
+
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
                         fill="currentColor"
-                      />
-                    </svg>
-                  </Link>
-                ))}
-            </div> */}
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-secondaryDarker"
+                      >
+                        <path
+                          d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </Link>
+                  );
+                })}
+            </div>
             <Link
               href="/bookmarks"
               className="flex flex-row space-x-2 items-center md:px-6 group cursor-pointer justify-end "
