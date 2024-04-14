@@ -40,7 +40,7 @@ export default async function Home() {
 
         <div className="flex flex-col space-y-4">
           {/* Posts */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3 ">
             <span className="font-semibold md:px-6">Recent Posts</span>
             <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
               {allPosts
@@ -126,7 +126,7 @@ export default async function Home() {
             </Link>
           </div>
           {/* Bookmarks */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-3">
             <span className="font-semibold md:px-6">Recent Bookmarks</span>
             <div className="flex flex-col space-y-8 md:space-y-1 md:px-2">
               {allBookmarks
@@ -146,9 +146,13 @@ export default async function Home() {
                       href={`${bookmarks.metadata.link}`}
                       className="flex flex-row justify-between items-center duration-300 md:hover:bg-hoverBackground md:p-4 rounded-lg cursor-pointer"
                     >
-                      <div className="flex flex-col space-y-2">
+                      <div className="flex items-center justify-center ">
                         <span className="text-secondaryDark">
                           {bookmarks.metadata.title}
+                        </span>
+                        <span className="h-1 w-1 bg-secondaryDarker rounded-full mx-3"></span>
+                        <span className="text-secondaryDarker">
+                          {reformatDate(bookmarks.metadata.publishedAt)}
                         </span>
                       </div>
 
