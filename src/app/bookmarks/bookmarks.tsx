@@ -50,6 +50,12 @@ export default function Bookmarks({ allBookmarks }: { allBookmarks: any }) {
             All
           </Link>
           <Link
+            href="/bookmarks?tag=other"
+            className={`text-secondaryDark ${tag === 'other' && 'underline'} hover:text-secondaryDark duration-200 hover:underline`}
+          >
+            Other
+          </Link>
+          <Link
             href="/bookmarks?tag=javascript"
             className={`text-secondaryDark ${tag === 'javascript' && 'underline'} hover:text-secondaryDark duration-200 hover:underline`}
           >

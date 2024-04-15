@@ -1,99 +1,65 @@
 ---
-title: 'TypeScript: type vs interface'
-publishedAt: '2023-04-30'
-summary: ''
-slug: 'typescript-type-vs-interface'
+title: 'Next.js 14 Blog w/ View Counter and Minute Read'
+publishedAt: '2024-02-11'
+summary: 'Here are some commands I constantly have to search up, in one place.'
+slug: 'nextjs14-blog-view-counter-and-minute-read'
 featured: 'true'
 tag: 'javascript'
 ---
 
-TypeScript is a popular statically-typed language that offers many benefits to developers. One of its main features is the ability to define custom types and interfaces. However, it can be confusing for beginners to understand the difference between these two concepts. In this blog post, we will explore the key differences between types and interfaces in TypeScript.
 
-## Types in TypeScript
+<CodeBlock title="Folder Structure">
+```bash title="Terminal"
+├── src
+|   ├── app
+|   |   ├── api
+|   |   |   ├── increment
+|   |   |   |   |   ├── route.ts
+|   |   ├── posts
+|   |   |   ├── [slug]
+|   |   |   |   |   ├── page.tsx
+|   |   |   |   |   ├── view.tsx
+|   |   |   |   ├── page.tsx
+|   |   |   |   ├── posts.tsx
+|   |   |   ├── favicon.ico
+|   |   |   ├── layout.tsx
+|   |   |   ├── page.tsx
+...
+```
+</CodeBlock>
 
-A type in TypeScript is used to describe the shape of a value. It defines a set of rules that the value must follow. Types can be created using the 'type' keyword, followed by a name and a type definition. For example, let's say we want to create a type for a user:
+<CodeBlock title="src/app/posts/page.tsx">
+```tsx showLineNumbers
+import React from 'react';
 
-<CodeBlock title="Example">
-```txt 
-type User = {
-  name: string;
-  age: number;
-  email: string;
+import { getPosts } from '@/lib/posts';
+import { Redis } from '@upstash/redis';
+
+import Posts from './posts';
+
+const redis = Redis.fromEnv();
+export const revalidate = 0;
+
+export const metadata = {
+  title: 'Posts',
+  description: '',
+};
+
+
+export default async function PostsPage() {
+  let allPosts = getPosts();
+  const views = (
+    await redis.mget<number[]>(
+      ...allPosts.map((p) => ['pageviews', 'posts', p.slug].join(':')),
+    )
+  ).reduce(
+    (acc, v, i) => {
+      acc[allPosts[i].slug] = v ?? 0;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+  return <Posts allPosts={allPosts} views={views} />;
 }
 ```
 </CodeBlock>
-
-This type defines a user object that must have a 'name', 'age', and 'email' property. If we try to create a user object that does not match this type, TypeScript will throw a type error.
-
-Types in TypeScript are appropriate to use when you need to define a simple type alias or a union type. Type aliases can be used to simplify complex types and make them more readable. For example, if you have a complex type with a long name, you can create a type alias to make it easier to use:
-
-<CodeBlock title="Example">
-```txt
-type MyComplexType = {
-  prop1: string;
-  prop2: number;
-  prop3: boolean;
-  // ...and so on
-}
-```
-</CodeBlock>
-You can then use this type alias instead of the original complex type throughout your code. Type aliases are also useful when you want to create a union type, which is a type that can have one of several different types. For example:
-
-<CodeBlock title="Example">
-```txt
-type MyUnionType = string | number;
-```
-</CodeBlock>
-
-This type definition means that the variable of type 'MyUnionType' can either be a string or a number.
-
-In general, types are useful when you need to define a simple type or a union type. If you need to define an object or a class with multiple properties or methods, interfaces are a better choice. Interfaces offer more flexibility and allow for extension and implementation, making them a more appropriate choice for complex object structures.
-
-## Interfaces in TypeScript
-
-An interface in TypeScript is also used to define the shape of a value. However, unlike types, interfaces can be extended and implemented. Interfaces are created using the 'interface' keyword, followed by a name and a type definition. Let's modify our previous example to use an interface instead:
-
-<CodeBlock title="Example">
-```txt
-interface User {
-  name: string;
-  age: number;
-  email: string;
-}
-```
-</CodeBlock>
-
-This interface defines the same user object as our previous type. However, we can now extend this interface to add more properties. For example, let's say we want to add a 'phone' property to our user interface:
-
-<CodeBlock title="Example">
-```txt
-interface UserWithPhone extends User {
-  phone: string;
-}
-```
-</CodeBlock>
-
-This interface now defines a user object that must have a 'name', 'age', 'email', and 'phone' property. We can also implement this interface on a class:
-
-<CodeBlock title="Example">
-```txt
-class UserClass implements UserWithPhone {
-  name: string;
-  age: number;
-  email: string;
-  phone: string;
-  constructor(name: string, age: number, email: string, phone: string) {
-    this.name = name;
-    this.age = age;
-    this.email = email;
-    this.phone = phone;
-  }
-}
-```
-</CodeBlock>
-
-This class implements our UserWithPhone interface, which means it must have all of the properties defined in the interface.
-
-## Conclusion
-
-In summary, types and interfaces in TypeScript both serve a similar purpose of defining the shape of a value. However, interfaces offer more flexibility by allowing for extension and implementation. Types are useful for creating simple type definitions, while interfaces are more suited for defining complex object structures. By understanding the differences between types and interfaces, you can write more maintainable and scalable TypeScript code.
