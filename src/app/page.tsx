@@ -138,7 +138,7 @@ export default async function Home() {
                     return -1;
                   }
                   return 1;
-                })
+                }).slice(0, 3)
                 .map((bookmarks: any) => {
                   return (
                     <Link
