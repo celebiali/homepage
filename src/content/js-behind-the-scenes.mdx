@@ -1,0 +1,120 @@
+---
+title: 'JavaScript Behind The Scenes'
+publishedAt: '2024-04-14'
+summary: 'JavaScript'in işleyişi ve nasıl çalışır'
+slug: 'js-behind-the-scenes'
+featured: 'true'
+tag: 'javascript'
+isDraft: 'true'
+---
+
+İlk blog yazımda sizleri JavaScript'in işleyişi ve nasıl çalıştığı hakkında bilgilendirmek istiyorum.
+
+İlk olarak bilmeliyiz ki Javascript yapısı gereği, Single Thread (tek iş parçacıklı) ve Synchronous (senkron) şekilde çalışır. 
+Javascript’in Single Thread olması, tek seferde yalnızca tek bir işi yapabildiği anlamına gelmektedir. 
+Bu nedenle bünyesinde tek bir Call Stack barındırır.
+
+
+<Image
+  alt={`Example of View Counter and Minute Read`}
+  src={`https://res.cloudinary.com/dj0pasgzk/image/upload/v1713283933/h8by2z9zkxqcjtrdipxz.png`}
+  width={960}
+  height={720}
+  priority
+/>
+
+
+JavaScript Engine: JavaScript kodunu yorumlar ve kodun yürütülmesinden sorumludur.
+
+CallStack: JavaScript'teki işlemlerin sırayla gerçekleştirildiği yapıdır. İşlemler, yukarıdan aşağıya  doğru (LIFO) sırayla çalışır ve her işlem tamamlandığında Call Stack'ten çıkar. Eğer yeni bir işlem çağrılırsa, bu işlem Call Stack'in en üstüne eklenir ve çalışmaya başlar.
+
+Callback Queue: CallStack'teki işlemlerin tamamlanmasını bekleyen kuyruk yapısıdır. CallStack içi boşaldıkça (Callback Queue -> CallStack) ekleme yapar.
+
+
+<CodeBlock title="CallStack">
+```tsx showLineNumbers
+function callStack1() {
+  console.log('callStack1 çağrıldı');
+  callStack2();
+}
+
+//Callback Queue'da bekler
+function callStack2() {
+  console.log('callStack2 çağrıldı');
+}
+
+console.log('Start');
+function1();
+console.log('End');
+```
+</CodeBlock>
+
+
+Yukarıdaki Kodun çıktısı bu şekilde olur
+
+<CodeBlock title="CallStack Çıktı">
+```tsx showLineNumbers
+Start
+callStack1 çağrıldı
+callStack2 çağrıldı
+End
+```
+</CodeBlock>
+
+
+Javascript, tarayıcılar üzerinde çalışırken çeşitli API'lere erişim sağlar. Bu API'ler asenkron işlemlerin gerçekleştirilmesine olanak sağlar. 
+
+<Image
+  alt={`Example of View Counter and Minute Read`}
+  src={`https://res.cloudinary.com/dj0pasgzk/image/upload/v1713284651/me4w1lzg94mpdx7ye9jj.webp`}
+  width={880}
+  height={495}
+  priority
+/>
+
+Event Loop, call stack’in boş olup olmadığını kontrol eder. Eğer call stack boşsa ve task queue’da (Macrotask ve Microtask Queue) bekleyen bir işlem varsa, bu işlem call stack’e taşınır ve işlenir (LIFO). Bu sayede JavaScript, single-threaded olmasına rağmen asenkron kodu işleyebilir.
+
+
+<CodeBlock title="Task Queue">
+```tsx showLineNumbers
+function hello() {
+  console.log('Hello');
+}
+
+function renderResult() {
+  console.log(data);
+}
+
+function blockFor1Second() {}
+
+//Macrotask Queue en son çalışır
+setTimeout(hello,0);
+
+
+const fetchData = fetch("https://....-API-URL-.../");
+fetchData.then(renderResult);
+
+blockFor1Second()
+
+console.log("Start");
+
+```
+</CodeBlock>
+
+
+Yukarıdaki Kodun çıktısı bu şekilde olur
+
+<CodeBlock title="Task Queue Çıktı">
+```tsx showLineNumbers
+Start
+Data from API
+Hello
+```
+</CodeBlock>
+
+
+
+Heap:
+ 
+
+

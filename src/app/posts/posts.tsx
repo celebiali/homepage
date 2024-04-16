@@ -44,9 +44,7 @@ export default function Posts({
           </svg>
           <span className="text-secondaryDarker">Back</span>
         </Link>
-        <span className="text-4xl font-bold md:px-6 mb-6 md:mb-4">
-          All Posts
-        </span>
+        <span className="text-4xl font-bold md:px-6 mb-6 md:mb-4">Posts</span>
         <div className="flex flex-row space-x-4 mb-6 md:mb-4 text-sm  md:px-6 overflow-x-auto line-clamp-1 text-nowrap">
           <Link
             href="/posts"
