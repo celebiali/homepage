@@ -5,7 +5,7 @@ import { Redis } from '@upstash/redis';
 
 import Posts from './posts';
 
-const redis = Redis.fromEnv();
+export const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export const metadata = {
