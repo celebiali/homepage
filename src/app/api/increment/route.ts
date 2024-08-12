@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { Redis } from '@upstash/redis';
 
-export const redis = Redis.fromEnv();
+const redis = Redis.fromEnv();
 export const runtime = 'edge';
 
 export async function POST(req: NextRequest): Promise<NextResponse> {

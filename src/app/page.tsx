@@ -8,7 +8,7 @@ import { Redis } from '@upstash/redis';
 
 import Header from './header';
 
-export const redis = Redis.fromEnv();
+const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export default async function Home() {

@@ -14,7 +14,7 @@ import { getBookmarks } from '@/lib/posts';
 import { calculateReadingTime, reformatDate } from '@/lib/utils';
 import { Redis } from '@upstash/redis';
 
-export const redis = Redis.fromEnv();
+const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export async function generateMetadata({
