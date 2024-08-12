@@ -8,23 +8,23 @@ import { Redis } from '@upstash/redis';
 
 import Header from './header';
 
-//export const redis = Redis.fromEnv();
+export const redis = Redis.fromEnv();
 export const revalidate = 0;
 
 export default async function Home() {
   let allPosts = getPosts();
   let allBookmarks = getBookmarks();
-  // const views = (
-  //   await redis.mget<number[]>(
-  //     ...allPosts.map((p) => ['pageviews', 'posts', p.slug].join(':')),
-  //   )
-  // ).reduce(
-  //   (acc, v, i) => {
-  //     acc[allPosts[i].slug] = v ?? 0;
-  //     return acc;
-  //   },
-  //   {} as Record<string, number>,
-  // );
+  const views = (
+     await redis.mget<number[]>(
+       ...allPosts.map((p) => ['pageviews', 'posts', p.slug].join(':')),
+     )
+   ).reduce(
+   (acc, v, i) => {
+      acc[allPosts[i].slug] = v ?? 0;
+      return acc;
+   },
+    {} as Record<string, number>,
+   );
 
   return (
     <>
@@ -70,12 +70,12 @@ export default async function Home() {
                         <span>{reformatDate(post.metadata.publishedAt)}</span>
                         <span className="h-1 w-1 bg-secondaryDarker rounded-full" />
                         <span>
-                          {/* <span>
+                        <span>
                             {Intl.NumberFormat('en-US', {
                               notation: 'compact',
                             }).format(views[post.slug])}{' '}
                             {' views'}
-                          </span> */}
+                          </span> 
                         </span>
                         <span className="h-1 w-1 bg-secondaryDarker rounded-full" />
                         <span>
