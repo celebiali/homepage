@@ -8,7 +8,7 @@ A query function that takes two arguments looks like:
 ```ts
 // functions.js
 import { query } from "./_generated/server";
-import { v } from "convex/values";
+ import { v } from "convex/values";
 
 export const myQueryFunction = query({
   // Validators for arguments.
